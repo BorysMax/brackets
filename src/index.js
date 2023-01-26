@@ -1,14 +1,19 @@
 module.exports = function check(str, bracketsConfig) {
     let steck = [];
     let equal = false;
+    let equalSource = "";
     for (let i = 0; i < str.length; i++) {
         if (isLeft (str[i], bracketsConfig)) {
             if (isEqual(str[i], bracketsConfig) && !equal) {
               equal = true;
+              equalSource = str[i];
               steck.push(str[i]);
           } else if (isEqual(str[i], bracketsConfig) && equal) {
-              equal = false;
-              steck.pop();
+              if (equalSource === str[i]) {
+                equal = false;
+                equalSource = "";
+                steck.pop();
+              }
           } else {
               steck.push(str[i]);
           }
